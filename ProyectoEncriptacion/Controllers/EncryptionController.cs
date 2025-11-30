@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ProyectoEncriptacion.Controllers
 {
@@ -6,6 +7,7 @@ namespace ProyectoEncriptacion.Controllers
     {
         [Route("encryption")]
         [Route("ecrypt")]
+        [Authorize]
         public IActionResult Encryption()
         {
             return View();

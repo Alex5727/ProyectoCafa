@@ -1,4 +1,5 @@
 using Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,17 @@ builder.Services.AddControllersWithViews();
 
 var PostgreSQLConnectionConfiguration = new PostgresSQLConnection(Environment.GetEnvironmentVariable("CONNECTION_STRING"));
 builder.Services.AddSingleton(PostgreSQLConnectionConfiguration);
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Auth";
+        options.AccessDeniedPath = "/Auth";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+        options.SlidingExpiration = true;
+    });
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -23,6 +35,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
