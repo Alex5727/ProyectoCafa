@@ -2,3 +2,7 @@ launchSettings.json
 .vs/
 bin/
 obj/
+Debug/
+Debug/net8.0/
+Debug/net8.0/ref/
+Debug/net8.0/refint/

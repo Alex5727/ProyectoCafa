@@ -243,3 +243,4 @@ D:\ProyectoEncriptacion\ProyectoEncriptacion\bin\Debug\net8.0\Data.dll
 D:\ProyectoEncriptacion\ProyectoEncriptacion\bin\Debug\net8.0\Data.pdb
 D:\ProyectoEncriptacion\ProyectoEncriptacion\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
 D:\ProyectoEncriptacion\ProyectoEncriptacion\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+D:\ProyectoEncriptacion\ProyectoEncriptacion\obj\Debug\net8.0\ProyectoEncriptacion.sourcelink.json

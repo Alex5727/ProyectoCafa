@@ -13,3 +13,4 @@ D:\ProyectoEncriptacion\Data\obj\Debug\net8.0\Data.dll
 D:\ProyectoEncriptacion\Data\obj\Debug\net8.0\refint\Data.dll
 D:\ProyectoEncriptacion\Data\obj\Debug\net8.0\Data.pdb
 D:\ProyectoEncriptacion\Data\obj\Debug\net8.0\ref\Data.dll
+D:\ProyectoEncriptacion\Data\obj\Debug\net8.0\Data.sourcelink.json
