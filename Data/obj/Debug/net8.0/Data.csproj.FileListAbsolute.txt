@@ -1,0 +1,15 @@
+D:\ProyectoEncriptacion\Data\bin\Debug\net8.0\Data.deps.json
+D:\ProyectoEncriptacion\Data\bin\Debug\net8.0\Data.dll
+D:\ProyectoEncriptacion\Data\bin\Debug\net8.0\Data.pdb
+D:\ProyectoEncriptacion\Data\bin\Debug\net8.0\DTOs.dll
+D:\ProyectoEncriptacion\Data\bin\Debug\net8.0\DTOs.pdb
+D:\ProyectoEncriptacion\Data\obj\Debug\net8.0\Data.csproj.AssemblyReference.cache
+D:\ProyectoEncriptacion\Data\obj\Debug\net8.0\Data.GeneratedMSBuildEditorConfig.editorconfig
+D:\ProyectoEncriptacion\Data\obj\Debug\net8.0\Data.AssemblyInfoInputs.cache
+D:\ProyectoEncriptacion\Data\obj\Debug\net8.0\Data.AssemblyInfo.cs
+D:\ProyectoEncriptacion\Data\obj\Debug\net8.0\Data.csproj.CoreCompileInputs.cache
+D:\ProyectoEncriptacion\Data\obj\Debug\net8.0\Data.csproj.Up2Date
+D:\ProyectoEncriptacion\Data\obj\Debug\net8.0\Data.dll
+D:\ProyectoEncriptacion\Data\obj\Debug\net8.0\refint\Data.dll
+D:\ProyectoEncriptacion\Data\obj\Debug\net8.0\Data.pdb
+D:\ProyectoEncriptacion\Data\obj\Debug\net8.0\ref\Data.dll

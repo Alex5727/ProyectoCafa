@@ -1,0 +1,86 @@
+﻿@{
+    // Razor Syntax: Define el título de la página
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+        <h1 class="display-3 font-bold text-green mb-3">NeonEncryption</h1>
+
+        <p class="lead text-sub-green mx-auto" style="max-width: 800px;">
+            En **NeonEncryption**, no solo construimos software, **demostramos la seguridad informática a nivel fundamental**.
+            Esta aplicación web es el resultado de un proyecto integral que aplica los principios avanzados de la criptografía y la protección de datos.
+        </p>
+    </div>
+
+    <hr class="my-5 border-333">
+
+    <div class="row align-items-center mb-5">
+
+        <div class="col-md-6 order-md-1">
+            <h2 class="h4 text-green mb-3">💡 Nuestro Propósito y Tecnología Criptográfica</h2>
+            <p class="text-light">
+                Hemos desarrollado e implementado un sistema que cumple con rigurosos estándares de seguridad. Nuestro enfoque se centró en:
+            </p>
+            <ul class="list-unstyled text-light ml-3">
+                <li class="mb-2"><span class="text-green font-weight-bold">Opciones de Algoritmo:</span> Implementación de un algoritmo clásico (IDEA, AES, etc.) o desarrollo de un **algoritmo propio y definido** por nuestro equipo.</li>
+                <li class="mb-2"><span class="text-green font-weight-bold">Mecanismos Robustos:</span> Nuestro algoritmo utiliza una combinación de mecanismos clave como operaciones aritméticas, lógicas y permutaciones.</li>
+                <li class="mb-2"><span class="text-green font-weight-bold">Gestión de Claves (KEYS):</span> Uso esencial de KEYS para asegurar la confidencialidad, cumpliendo con los criterios del proyecto.</li>
+            </ul>
+        </div>
+
+        <div class="col-md-6 order-md-0 text-center">
+            <img src="images/neonencryption.jpeg" id="img-home" alt="Logo de NeonEncryption" class="img-fluid rounded-lg shadow-lg">
+        </div>
+    </div>
+
+    <hr class="my-5 border-333">
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <h2 class="h4 text-center text-green mb-4">✨ Funcionalidades Clave de la Plataforma</h2>
+            <div class="row">
+
+                <div class="col-md-6 mb-4">
+                    <div class="card bg-card p-4 h-100">
+                        <h5 class="card-title text-green">1. Autenticación Segura (OWASP)</h5>
+                        <p class="card-text">Página de Inicio de Sesión que aplica todos los criterios para evitar **vulnerabilidades (OWASP)**. Los usuarios están correctamente almacenados en nuestra base de datos para garantizar un acceso controlado.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card bg-card p-4 h-100">
+                        <h5 class="card-title text-green">2. Gestión de Usuarios</h5>
+                        <p class="card-text">Formulario de registro integrado que permite crear nuevas cuentas con contraseñas fuertes. Estos usuarios pueden luego iniciar sesión para utilizar las funciones de encriptación.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card bg-card p-4 h-100">
+                        <h5 class="card-title text-green">3. Encriptación de Texto</h5>
+                        <p class="card-text">Página dedicada donde el usuario puede ingresar un **texto en claro** para ser procesado por nuestro algoritmo, generando un **criptograma** seguro y único.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card bg-card p-4 h-100">
+                        <h5 class="card-title text-green">4. Desencriptación de Criptograma</h5>
+                        <p class="card-text">Funcionalidad inversa que toma el criptograma y, mediante el uso correcto de las claves, lo devuelve a su **correspondencia en texto en claro** original.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <p class="lead text-light">
+            ¿Listo para proteger tu información?
+        </p>
+        <a href="/Auth/Auth" class="btn btn-primary btn-lg px-5 py-3">
+            Inicia Sesión y Prueba Nuestro Algoritmo
+        </a>
+    </div>
+
+</div>

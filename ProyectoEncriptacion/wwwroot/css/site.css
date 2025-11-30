@@ -1,0 +1,181 @@
+﻿/* --- Paleta de Colores de Ciberseguridad --- */
+
+/* 🟢 Verde Neón Principal (A2DD39) */
+.text-green {
+    color: #a2dd39 !important;
+}
+
+.border-green {
+    border-color: #a2dd39 !important;
+}
+
+.bg-green {
+    background-color: #a2dd39 !important;
+}
+
+/* ⚪ Verde Suave Secundario/Claro (D7E7C6) */
+.text-sub-green {
+    color: #d7e7c6 !important;
+}
+
+/* 🔵 Azul Eléctrico/Ciber (Nuevo para Acentos de Datos/Conexión) */
+.text-ciber-blue {
+    color: #00BFFF !important; /* Azul Cielo Profundo para datos */
+}
+
+/* 🔴 Rojo Intenso (Nuevo para Alertas/Errores) */
+.text-danger {
+    color: #FF0000 !important;
+}
+
+.border-danger {
+    border-color: #FF0000 !important;
+}
+
+
+/* --- Estructura y Fondos --- */
+
+html {
+    font-size: 14px;
+    background-color: #0d0d0d !important; /* Fondo Principal */
+    position: relative; /* Esencial para que el footer pueda posicionarse de forma absoluta */
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+/* Fondos Oscuros */
+.bg-dark-custom {
+    background-color: #121212 !important; /* Fondo Oscuro Navbar/Secciones */
+}
+
+.bg-card {
+    background-color: #1e1e1e !important; /* Fondo de Tarjetas (Cards) */
+}
+
+
+/* --- Estilos Generales --- */
+
+body {
+    background-color: #0d0d0d !important;
+    color: #e0e0e0 !important; /* Color de texto claro general */
+    margin-bottom: 60px;
+    min-height: 100vh;
+    padding-bottom: 0 !important; /* Asegúrate de que el padding-bottom no interfiera */
+}
+
+/* Navbar Oscura */
+.navbar {
+    background-color: #121212 !important;
+    border-bottom: 1px solid #333 !important;
+}
+
+    .navbar .navbar-brand,
+    .navbar .nav-link {
+        color: #ffffff !important;
+    }
+
+        .navbar .nav-link:hover {
+            color: #a2dd39 !important; /* Hover con Verde Neón */
+        }
+
+/* Botones (Usa btn-success o btn-primary) */
+.btn-success,
+.btn-primary {
+    background-color: #a2dd39 !important;
+    border-color: #a2dd39 !important;
+    color: #000 !important; /* Texto negro para contraste máximo */
+    font-weight: 600;
+}
+
+    .btn-success:hover,
+    .btn-primary:hover {
+        background-color: #8cc32e !important;
+        border-color: #8cc32e !important;
+        transform: translateY(-1px);
+    }
+
+/* Enlaces (Links) */
+a {
+    color: #a2dd39;
+}
+
+    a:hover {
+        color: #c0e66b;
+        text-decoration: underline;
+    }
+
+/* --- Componentes --- */
+
+/* Cartas y Contenedores */
+.card {
+    background-color: #1e1e1e !important;
+    border: 1px solid #333 !important;
+    color: #e0e0e0 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.card-header {
+    background-color: #252525 !important;
+    border-bottom: 1px solid #333 !important;
+    color: #a2dd39 !important; /* Títulos de tarjeta en Verde Neón */
+}
+
+/* Tablas */
+.table {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border: 1px solid #333;
+}
+
+    .table thead {
+        background-color: #252525;
+        color: #a2dd39;
+    }
+
+.table-hover tbody tr:hover {
+    background-color: #2a2a2a !important;
+}
+
+/* Formularios y Campos de Entrada */
+.form-control,
+.form-select {
+    background-color: #252525 !important;
+    border: 1px solid #444 !important;
+    color: #e0e0e0 !important;
+}
+
+    .form-control:focus,
+    .form-select:focus {
+        background-color: #2d2d2d !important;
+        border-color: #a2dd39 !important; /* Borde de enfoque en Verde Neón */
+        box-shadow: 0 0 0 0.25rem rgba(162, 221, 57, 0.25) !important;
+        color: #e0e0e0 !important;
+    }
+
+/* Footer y Detalles */
+
+footer {
+    position: absolute; /* Posicionamiento absoluto respecto al <html> */
+    bottom: 0; /* Lo fija en la parte inferior */
+    width: 100%; /* Ocupa todo el ancho */
+    height: 60px; /* Define la altura que reservamos en el body */
+    /* Asegúrate de que tu footer tenga el mismo color de fondo para que se integre */
+    background-color: #0d0d0d !important;
+    border-top: 1px solid #333; /* Tu estilo de borde superior */
+    padding-top: 15px; /* Ajuste interno para centrar el texto verticalmente */
+    text-align: center;
+}
+
+hr {
+    border-color: #333;
+}
+
+blockquote {
+    border-left: 4px solid #a2dd39;
+    background-color: #1a1a1a;
+}
