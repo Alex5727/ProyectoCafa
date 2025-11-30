@@ -1,2 +1,4 @@
 launchSettings.json
 .vs/
+bin/
+obj/

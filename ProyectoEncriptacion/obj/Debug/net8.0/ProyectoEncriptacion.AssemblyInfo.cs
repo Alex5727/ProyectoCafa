@@ -11,14 +11,14 @@
 using System;
 using System.Reflection;
 
-// Eliminado el atributo problemático 'UIFrameworkAttribute' ya que no existe en el espacio de nombres especificado.
-// Si necesitas especificar un framework de UI, verifica la documentación de Microsoft.AspNetCore.Identity.UI para encontrar el atributo correcto.
+[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProyectoEncriptacion")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0a7d01bc101011abc416c229f420213431bcf388")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProyectoEncriptacion")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProyectoEncriptacion")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Generado por la clase WriteCodeFragment de MSBuild.
+
