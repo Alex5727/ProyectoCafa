@@ -11,3 +11,7 @@ Debug/net8.0/refint/
 ## pa que no den guerra en las subcarpetas ##
 **/bin/
 **/obj/
+*.dll
+*.exe
+*.pdb
+*.cache
