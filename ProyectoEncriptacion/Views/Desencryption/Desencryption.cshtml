@@ -1,22 +1,28 @@
-@model ProyectoEncriptacion.Models.TextModel
+@model TextModel
 
- <h2> My desencriptation </h2>
+<h2 class="mb-4">Desencriptar AES-256 GCM</h2>
 
-<h2>Desencriptar AES-256</h2>
-
-<form method="post">
-    <div>
-        <label>Ingresa un texto encriptado (AES):</label><br />
-        <input type="text" name="InputText" value="@Model.InputText" class="form-control" />
+<form asp-action="Index" method="post" class="mb-4">
+    <div class="form-group mb-3">
+        <label for="InputText" class="form-label">Ingresa un texto encriptado (AES-GCM, Base64):</label>
+        <textarea id="InputText"
+                  name="InputText"
+                  rows="4"
+                  class="form-control"
+                  placeholder="Pega aquí el texto cifrado">@Model.InputText</textarea>
     </div>
-    <br />
-    <button type="submit" class="btn btn-primary">Desencriptar</button>
+
+    <button type="submit" class="btn btn-primary">
+        Desencriptar
+    </button>
 </form>
 
 @if (Model != null && !string.IsNullOrEmpty(Model.DecryptedText))
 {
-    <div class="mt-3">
-        <label>Texto desencriptado:</label>
-        <textarea class="form-control" rows="3" readonly>@Model.DecryptedText</textarea>
+    <div class="mt-4">
+        <label class="form-label">Texto desencriptado:</label>
+        <textarea class="form-control"
+                  rows="4"
+                  readonly>@Model.DecryptedText</textarea>
     </div>
 }

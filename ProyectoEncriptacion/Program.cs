@@ -2,16 +2,21 @@ using Data;
 using Data.Interfaces;
 using Data.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using ProyectoEncriptacion.Data.Interfaces;
+using ProyectoEncriptacion.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IAesService>(sp =>
-    new AesService("12345678901234567890123456789012"));
+builder.Services.AddSingleton<IAesService>(_ =>
+    new AesService("12345678901234567890123456789012")
+);
 
 
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
 
 var PostgreSQLConnectionConfiguration = new PostgresSQLConnection(Environment.GetEnvironmentVariable("CONNECTION_STRING"));
 builder.Services.AddSingleton(PostgreSQLConnectionConfiguration);
@@ -47,10 +52,10 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
 name: "default",
-//     //pattern: "{controller=Auth}/{action=Auth}/{id?}");
-     pattern: "{controller=Home}/{action=Index}/{id?}");
-
+// pattern: "{controller=Auth}/{action=Auth}/{id?}",
+ pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
 
 app.Run();
+

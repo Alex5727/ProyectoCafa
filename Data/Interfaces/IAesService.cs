@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Data.Interfaces
-{
-    public interface IAesService
+    namespace ProyectoEncriptacion.Data.Interfaces
     {
-        string Decrypt(string encryptedText);
-    }
+        public interface IAesService
+        {
+            string Encrypt(string plaintext);
+        }
 
-}
+    }
