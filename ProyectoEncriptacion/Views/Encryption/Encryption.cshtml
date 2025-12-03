@@ -1,1 +1,17 @@
-@{ Layout = "_Layout"; } <h2> My encriptation </h2>
+<h2>Cifrado AES-256 GCM</h2>
+
+<form asp-action="Index" method="post">
+    <div>
+        <label for="InputText">Texto a cifrar:</label><br />
+        <textarea id="InputText" name="InputText" rows="4" cols="50">@Model.InputText</textarea>
+    </div>
+    <div>
+        <button type="submit">Cifrar</button>
+    </div>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.OutputText))
+{
+    <h3>Texto cifrado:</h3>
+    <textarea rows="4" cols="50" readonly>@Model.OutputText</textarea>
+}
