@@ -13,17 +13,17 @@ public class HomeController : Controller
     {
         _logger = logger;
     }
-    [Authorize]
+    //[Authorize]
     public IActionResult Index()
     {
         return View();
     }
-    [Authorize]
+    //[Authorize]
     public IActionResult Privacy()
     {
         return View();
     }
-    [Authorize]
+    //[Authorize]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

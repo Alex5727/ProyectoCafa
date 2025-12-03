@@ -1,7 +1,14 @@
 using Data;
+using Data.Interfaces;
+using Data.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<IAesService>(sp =>
+    new AesService("12345678901234567890123456789012"));
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -40,8 +47,9 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
 name: "default",
-     //pattern: "{controller=Auth}/{action=Auth}/{id?}");
+//     //pattern: "{controller=Auth}/{action=Auth}/{id?}");
      pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 
 

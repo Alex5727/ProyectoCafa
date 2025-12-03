@@ -1,1 +1,22 @@
-@{ Layout = "_Layout"; } <h2> My desencriptation </h2>
+@model ProyectoEncriptacion.Models.TextModel
+
+ <h2> My desencriptation </h2>
+
+<h2>Desencriptar AES-256</h2>
+
+<form method="post">
+    <div>
+        <label>Ingresa un texto encriptado (AES):</label><br />
+        <input type="text" name="InputText" value="@Model.InputText" class="form-control" />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Desencriptar</button>
+</form>
+
+@if (Model != null && !string.IsNullOrEmpty(Model.DecryptedText))
+{
+    <div class="mt-3">
+        <label>Texto desencriptado:</label>
+        <textarea class="form-control" rows="3" readonly>@Model.DecryptedText</textarea>
+    </div>
+}
