@@ -1,17 +1,33 @@
-launchSettings.json
+# Visual Studio
 .vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build 
 bin/
 obj/
 Debug/
-Debug/net8.0/
-Debug/net8.0/ref/
-Debug/net8.0/refint/
+Release/
 
-
-## pa que no den guerra en las subcarpetas ##
-**/bin/
-**/obj/
+# .NET
 *.dll
 *.exe
 *.pdb
 *.cache
+*.log
+
+# Rider / JetBrains
+.idea/
+
+# NuGet
+*.nupkg
+packages/
+
+# ASP.NET Core config
+appsettings.json
+appsettings.*.json
+
+# LaunchSettings
+Properties/launchSettings.json

@@ -1,5 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@model DTOs.LoginDTO
+@{
+    ViewData["Title"] = "Login";
+    Layout = null; // This uses your existing layout
+}
+
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,6 +15,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ProyectoEncriptacion.styles.css" asp-append-version="true" />
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 bg-dark">
@@ -16,7 +24,8 @@
                     NeonEncryption
                 </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target=".navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -26,19 +35,27 @@
                             <a class="nav-link text-green" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-green" asp-area="" asp-controller="Encryption" asp-action="Index">Encriptar</a>
+                            <a class="nav-link text-green" asp-area="" asp-controller="Encryption"
+                                asp-action="Index">Encriptar</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-green" asp-area="" asp-controller="Desencryption" asp-action="Index">Desencriptar</a>
+                            <a class="nav-link text-green" asp-area="" asp-controller="Desencryption"
+                                asp-action="Index">Desencriptar</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-green" asp-area="" asp-controller="UsersManagement" asp-action="Index">Usuarios</a>
+                            <a class="nav-link text-green" asp-area="" asp-controller="UsersManagement"
+                                asp-action="Index">Usuarios</a>
                         </li>
                         @* <li class="nav-item">
                             <a class="nav-link text-green" asp-area="" asp-controller="Auth" asp-action="Index">Login</a>
                         </li> *@
                     </ul>
+
                 </div>
+                <form asp-controller="Auth" asp-action="Logout" method="post">
+                    <button type="submit" class="btn btn-primary w-auto py-1">Salir</button>
+                </form>
+
             </div>
         </nav>
     </header>
@@ -58,6 +75,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
- 
+
 </body>
+
 </html>

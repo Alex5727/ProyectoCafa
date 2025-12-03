@@ -1,13 +1,20 @@
 using Data;
+using Data.Interfaces;
+using Data.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUsersService, UsersService>();
+var connectionString = builder.Configuration.GetConnectionString("PostgresConnection");
+var postgresConfig = new PostgresSQLConnection(connectionString);
+builder.Services.AddSingleton(postgresConfig);
 
-var PostgreSQLConnectionConfiguration = new PostgresSQLConnection(Environment.GetEnvironmentVariable("CONNECTION_STRING"));
-builder.Services.AddSingleton(PostgreSQLConnectionConfiguration);
+//var PostgreSQLConnectionConfiguration = new PostgresSQLConnection(Environment.GetEnvironmentVariable("CONNECTION_STRING"));
+//builder.Services.AddSingleton(PostgreSQLConnectionConfiguration);
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

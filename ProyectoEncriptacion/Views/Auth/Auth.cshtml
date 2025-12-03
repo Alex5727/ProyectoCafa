@@ -3,6 +3,7 @@
 
     Layout = null;
 }
+@Html.AntiForgeryToken()
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -69,6 +70,8 @@
                 border-color: #a2dd39;
             }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -78,47 +81,41 @@
             <div class="card login-card-blur rounded p-4 p-md-5">
 
                 <div class="d-flex align-items-center justify-content-center logo-header">
-                    <img src="images/tittle.jpeg" alt="Candado de NeonEncryption" class="img-fluid">
+                <h2 style="color:#a2dd39;">NeonEncryption</h1>
                 </div>
 
-                <div class="text-center mb-4">
-                    <h2 class="h5 font-weight-bold text-light">Iniciar Sesión</h2>
-                    <p class="text-secondary mt-1">Accede a tu cuenta</p>
+                <div class=" mb-3 mt-2">
+                    <h2 class="h5 font-weight-bold text-light text-center">Iniciar Sesión</h2>
+                    <p class="text-secondary mt-1 text-left">Accede con tu cuenta para continuar:</p>
                 </div>
-                <form action="/Home/Index" method="POST">
+                <form asp-action="Login"asp-controller="Auth" method="POST">
                     <div class="mb-3">
-                        <label for="email" class="form-label">Correo Electrónico</label>
-                        <input type="email" id="email" name="email" required
+                        <label for="text" class="form-label">Ingresar usuario:</label>
+                        <input type="text" id="username" name="username" required
                                class="form-control"
-                               placeholder="tu@correo.com">
+                               placeholder="Usuario">
                     </div>
 
                     <div class="mb-3">
-                        <label for="password" class="form-label">Contraseña</label>
+                        <label for="password" class="form-label">Contraseña:</label>
                         <input type="password" id="password" name="password" required
                                class="form-control"
                                placeholder="••••••••">
                     </div>
 
-                    <div class="d-flex justify-content-between align-items-center mb-4 small">
+                    @* <div class="d-flex justify-content-between align-items-center mb-4 small">
                         <div class="form-check">
                             <input id="remember-me" name="remember-me" type="checkbox"
                                    class="form-check-input">
                             <label for="remember-me" class="form-check-label text-light">Recordarme</label>
                         </div>
                         <a href="#" class="text-green text-decoration-none">¿Olvidaste tu contraseña?</a>
-                    </div>
+                    </div> *@
 
                     <div>
                         <button type="submit" class="btn btn-primary w-100 py-2">Iniciar Sesión</button>
                     </div>
                 </form>
-
-                <p class="mt-4 text-center small text-secondary">
-                    ¿No tienes una cuenta?
-                    <a href="#" class="text-green text-decoration-none">Regístrate aquí</a>
-                </p>
-
             </div>
         </div>
     </div>
