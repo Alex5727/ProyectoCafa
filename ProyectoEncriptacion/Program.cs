@@ -2,54 +2,65 @@ using Data;
 using Data.Interfaces;
 using Data.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Servicios
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
+
 var connectionString = builder.Configuration.GetConnectionString("PostgresConnection");
 var postgresConfig = new PostgresSQLConnection(connectionString);
 builder.Services.AddSingleton(postgresConfig);
 
-//var PostgreSQLConnectionConfiguration = new PostgresSQLConnection(Environment.GetEnvironmentVariable("CONNECTION_STRING"));
-//builder.Services.AddSingleton(PostgreSQLConnectionConfiguration);
+// Rate limiting
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddPolicy("loginPolicy", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "global",
+            factory: _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 5,
+                Window = TimeSpan.FromMinutes(1)
+            }));
+});
 
+
+// Autenticación
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Auth";
-        options.AccessDeniedPath = "/Auth";
+        options.LoginPath = "/Auth/Login";
+        options.AccessDeniedPath = "/Auth/Login";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
         options.SlidingExpiration = true;
     });
 
 builder.Services.AddAuthorization();
 
-var app = builder.Build();
+var app = builder.Build(); 
 
-// Configure the HTTP request pipeline.
+// Middleware
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 
+app.UseRateLimiter(); 
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Rutas
 app.MapControllerRoute(
-name: "default",
-     //pattern: "{controller=Auth}/{action=Auth}/{id?}");
-     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

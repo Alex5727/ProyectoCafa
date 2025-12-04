@@ -32,6 +32,10 @@
     border-color: #FF0000 !important;
 }
 
+.text-justify {
+    text-align: justify;
+}
+
 
 /* --- Estructura y Fondos --- */
 
@@ -46,6 +50,14 @@ html {
     html {
         font-size: 16px;
     }
+}
+
+.img-home-sm {
+
+    max-width: 250px; 
+        display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Fondos Oscuros */

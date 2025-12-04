@@ -23,7 +23,6 @@ namespace Data.Services
         protected NpgsqlConnection DbConnection()
               => new NpgsqlConnection(_connection._ConnectionString);
 
-
         #region LOGIN
 
         public async Task<UsuarioModel?> Login(LoginDTO loginDto)
@@ -37,21 +36,40 @@ namespace Data.Services
                 var user = result.FirstOrDefault();
 
                 if (user == null)
-                    return null;
+                    throw new HttpResponseException(
+                        StatusCodes.Status401Unauthorized, 
+                        "Usuario no encontrado"
+                    );
 
-                // Validar contraseña
                 if (!BC.EnhancedVerify(loginDto.Password, user.passwd))
-                    throw new HttpResponseException(StatusCodes.Status401Unauthorized, "Contraseña incorrecta");
+                    throw new HttpResponseException(
+                        StatusCodes.Status401Unauthorized, 
+                        "Correo o contraseña incorrecta."
+                    );
 
                 return user;
             }
+            catch (HttpResponseException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                // Para otros errores, lanzar una excepción genérica
+                throw new HttpResponseException(
+                    StatusCodes.Status500InternalServerError, 
+                    $"Error en autenticación: {"Usuario no encontrado."}"
+                );
+            }
             finally
             {
-                await database.CloseAsync();
+                if (database.State != System.Data.ConnectionState.Closed)
+                    await database.CloseAsync();
             }
         }
 
         #endregion
+
         public async Task<IEnumerable<T>> UsuarioQueryAsync<T>(string SqlQuery, object? parametros = null)
         {
             IEnumerable<T> items = [];
@@ -65,12 +83,12 @@ namespace Data.Services
                 var result = await database.QueryAsync<T>(
                     SqlQuery,
                     param: parametros
-                    );
+                );
                 items = result.Distinct();
-                await database.CloseAsync();
             }
             catch (PostgresException ex)
             {
+                // Manejo de errores específicos de PostgreSQL
                 if (ex.SqlState == DB_ERRORS.UNAUTHORIZED)
                     throw new HttpResponseException(StatusCodes.Status401Unauthorized, ex.MessageText);
 
@@ -89,6 +107,12 @@ namespace Data.Services
             {
                 throw new HttpResponseException(StatusCodes.Status500InternalServerError, ex.Message);
             }
+            finally
+            {
+                if (database.State != System.Data.ConnectionState.Closed)
+                    await database.CloseAsync();
+            }
+            
             return items;
         }
     }

@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoEncriptacion.Models;
+using Data.Exceptions;
 
 namespace ProyectoEncriptacion.Controllers
 {
+    [Route("Auth")]
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
@@ -17,52 +19,74 @@ namespace ProyectoEncriptacion.Controllers
             _authService = authService;
         }
 
-        [Route("auth")]
-        // [Route("login")]
-        [HttpGet("login")]
+        [HttpGet("Login")]
         [AllowAnonymous]
-        public IActionResult Auth()
+        public IActionResult Login()
         {
+            // Si ya está autenticado, redirigir al home
+            if (User.Identity?.IsAuthenticated == true)
+                return RedirectToAction("Index", "Home");
+
             return View();
         }
 
-        [HttpPost("login")]
+        [HttpPost("Login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginDTO loginRequestData)
         {
-            UsuarioModel user = await _authService.Login(loginRequestData);
-            if (user == null)
-                return Unauthorized("Credenciales incorrectas");
-
-            // Claims del usuario
-            var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, user.username),
-        };
-
-            var claimsIdentity = new ClaimsIdentity(claims, "Cookies");
-
-            await HttpContext.SignInAsync(
-                scheme: "Cookies",
-                principal: new ClaimsPrincipal(claimsIdentity),
-                properties: new AuthenticationProperties
+            try
+            {
+                // Validación básica
+                if (string.IsNullOrEmpty(loginRequestData.Username) ||
+                    string.IsNullOrEmpty(loginRequestData.Password))
                 {
-                    IsPersistent = true,        // cookie persistente
-                    ExpiresUtc = DateTime.UtcNow.AddHours(8)
+                    TempData["Error"] = "Usuario y contraseña son requeridos";
+                    return View("Login");
                 }
-            );
 
-            return RedirectToAction("Index", "Home");
+                UsuarioModel user = await _authService.Login(loginRequestData);
+
+                // Crear sesión con claims
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.username)
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, "Cookies");
+                var authProperties = new AuthenticationProperties
+                {
+                    IsPersistent = true,
+                    ExpiresUtc = DateTime.UtcNow.AddHours(8)
+                };
+
+                await HttpContext.SignInAsync(
+                    scheme: "Cookies",
+                    principal: new ClaimsPrincipal(claimsIdentity),
+                    properties: authProperties
+                );
+
+                // Redirección
+                return RedirectToAction("Index", "Home");
+            }
+            catch (HttpResponseException ex)
+            {
+                // Mostrar error 
+                TempData["Error"] = ex.Message;
+                return View();
+            }
+            catch (Exception)
+            {
+                TempData["Error"] = "Error de autenticación. Verifique sus credenciales.";
+                return View();
+            }
         }
 
-        [HttpPost("logout")]
+        [HttpPost("Logout")]
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync("Cookies");
-            return RedirectToAction("Login", "Auth");
+            return RedirectToAction("Login");
         }
-
     }
-
 }
-
