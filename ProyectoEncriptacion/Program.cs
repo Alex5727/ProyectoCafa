@@ -1,25 +1,27 @@
 using Data;
-using Data.Interfaces;
-using Data.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ProyectoEncriptacion.Data.Interfaces;
 using ProyectoEncriptacion.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 builder.Services.AddSingleton<IAesService>(_ =>
     new AesService("12345678901234567890123456789012")
 );
 
 
+builder.Services.AddMemoryCache();
 
-// Add services to the container.
+
 builder.Services.AddControllersWithViews();
 
 
-
-var PostgreSQLConnectionConfiguration = new PostgresSQLConnection(Environment.GetEnvironmentVariable("CONNECTION_STRING"));
+var PostgreSQLConnectionConfiguration = new PostgresSQLConnection(
+    Environment.GetEnvironmentVariable("CONNECTION_STRING")
+);
 builder.Services.AddSingleton(PostgreSQLConnectionConfiguration);
+
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -34,28 +36,32 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+
 app.UseRouting();
+
+
+app.UseMiddleware<RateLimitMiddleware>();
+
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-name: "default",
-// pattern: "{controller=Auth}/{action=Auth}/{id?}",
- pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+);
 
 
 app.Run();
-
