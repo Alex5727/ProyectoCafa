@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoEncriptacion.Models;
 using Data.Exceptions;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ProyectoEncriptacion.Controllers
 {
@@ -41,7 +42,7 @@ namespace ProyectoEncriptacion.Controllers
                     string.IsNullOrEmpty(loginRequestData.Password))
                 {
                     TempData["Error"] = "Usuario y contraseña son requeridos";
-                    return View("Login");
+                    return RedirectToAction("Login");
                 }
 
                 UsuarioModel user = await _authService.Login(loginRequestData);
@@ -58,26 +59,23 @@ namespace ProyectoEncriptacion.Controllers
                     IsPersistent = true,
                     ExpiresUtc = DateTime.UtcNow.AddHours(8)
                 };
-
                 await HttpContext.SignInAsync(
-                    scheme: "Cookies",
-                    principal: new ClaimsPrincipal(claimsIdentity),
-                    properties: authProperties
-                );
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    authProperties);
 
                 // Redirección
                 return RedirectToAction("Index", "Home");
             }
             catch (HttpResponseException ex)
             {
-                // Mostrar error 
                 TempData["Error"] = ex.Message;
-                return View();
+                return RedirectToAction("Login");
             }
             catch (Exception)
             {
                 TempData["Error"] = "Error de autenticación. Verifique sus credenciales.";
-                return View();
+                return RedirectToAction("Login");
             }
         }
 
@@ -85,8 +83,13 @@ namespace ProyectoEncriptacion.Controllers
         [Authorize]
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync("Cookies");
-            return RedirectToAction("Login");
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            foreach (var cookie in Request.Cookies.Keys)
+            {
+                Response.Cookies.Delete(cookie);
+            }
+            return RedirectToAction("Login", "Auth");
         }
     }
 }
