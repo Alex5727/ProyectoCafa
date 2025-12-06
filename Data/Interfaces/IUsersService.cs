@@ -9,6 +9,6 @@ namespace Data.Interfaces
 {
     public interface IUsersService
     {
-        public Task<UsuarioModel> GetUsers();
+        public Task<IEnumerable<UsuarioModel>> FindUserByUsername(string username);
     }
 }

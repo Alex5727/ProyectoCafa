@@ -1,27 +1,75 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Data.Interfaces;
+﻿using Data.Interfaces;
 using DTOs;
 using Microsoft.AspNetCore.Http;
 using Npgsql;
 using Dapper;
 using Data.Exceptions;
+using ProyectoEncriptacion.Models;
+using BC = BCrypt.Net.BCrypt;
 
 namespace Data.Services
 {
     public class AuthService : IAuthService
     {
         private PostgresSQLConnection _connection;
-        public AuthService(PostgresSQLConnection connection) => _connection = connection;
+        private readonly IUsersService _user;
 
-        protected NpgsqlConnection DbConnection() => new NpgsqlConnection(_connection._ConnectionString);
-        public async Task LogIn(LoginDTO loginDTO)
+        public AuthService(PostgresSQLConnection connection, IUsersService user)
         {
-            throw new NotImplementedException();
+            _connection = connection;
+            _user = user;
         }
+
+        protected NpgsqlConnection DbConnection()
+              => new NpgsqlConnection(_connection._ConnectionString);
+
+        #region LOGIN
+
+        public async Task<UsuarioModel?> Login(LoginDTO loginDto)
+        {
+            using var database = DbConnection();
+
+            try
+            {
+                var result = await _user.FindUserByUsername(loginDto.Username);
+
+                var user = result.FirstOrDefault();
+
+                if (user == null)
+                    throw new HttpResponseException(
+                        StatusCodes.Status401Unauthorized, 
+                        "Usuario no encontrado"
+                    );
+
+                if (!BC.EnhancedVerify(loginDto.Password, user.passwd))
+                    throw new HttpResponseException(
+                        StatusCodes.Status401Unauthorized, 
+                        "Correo o contraseña incorrecta."
+                    );
+
+                return user;
+            }
+            catch (HttpResponseException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                // Para otros errores, lanzar una excepción genérica
+                throw new HttpResponseException(
+                    StatusCodes.Status500InternalServerError, 
+                    $"Error en autenticación: {"Usuario no encontrado."}"
+                );
+            }
+            finally
+            {
+                if (database.State != System.Data.ConnectionState.Closed)
+                    await database.CloseAsync();
+            }
+        }
+
+        #endregion
+
         public async Task<IEnumerable<T>> UsuarioQueryAsync<T>(string SqlQuery, object? parametros = null)
         {
             IEnumerable<T> items = [];
@@ -35,12 +83,12 @@ namespace Data.Services
                 var result = await database.QueryAsync<T>(
                     SqlQuery,
                     param: parametros
-                    );
+                );
                 items = result.Distinct();
-                await database.CloseAsync();
             }
             catch (PostgresException ex)
             {
+                // Manejo de errores específicos de PostgreSQL
                 if (ex.SqlState == DB_ERRORS.UNAUTHORIZED)
                     throw new HttpResponseException(StatusCodes.Status401Unauthorized, ex.MessageText);
 
@@ -59,6 +107,12 @@ namespace Data.Services
             {
                 throw new HttpResponseException(StatusCodes.Status500InternalServerError, ex.Message);
             }
+            finally
+            {
+                if (database.State != System.Data.ConnectionState.Closed)
+                    await database.CloseAsync();
+            }
+            
             return items;
         }
     }

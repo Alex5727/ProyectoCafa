@@ -1,0 +1,178 @@
+﻿@{
+    ViewData["Title"] = "Auth";
+    Layout = null;
+    var errorMessage = TempData["Error"] as string;
+    var successMessage = TempData["Success"] as string;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - NeonEncryption</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <style>
+        body {
+            color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            min-height: 100vh;
+            background-image: url('/images/fondo.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .login-card-blur {
+            background-color: rgba(30, 30, 30, 0.164);
+            border: 1px solid #333;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            padding: 2rem;
+            border-radius: 0.75rem;
+        }
+
+        .logo-header h2 {
+            color: #a2dd39;
+            margin: 0;
+        }
+
+        .form-control {
+            background-color: #252525 !important;
+            border: 1px solid #444 !important;
+            color: #e0e0e0 !important;
+        }
+
+        .form-control:focus {
+            border-color: #a2dd39 !important;
+            box-shadow: 0 0 0 0.25rem rgba(162, 221, 57, 0.25) !important;
+        }
+
+        .swal2-popup {
+            background: rgba(30, 30, 30, 0.95) !important;
+            border: 1px solid #444 !important;
+            color: #e0e0e0 !important;
+            backdrop-filter: blur(8px);
+        }
+
+        .swal2-title {
+            color: #a2dd39 !important;
+        }
+
+        .swal2-confirm {
+            background-color: #a2dd39 !important;
+            border-color: #a2dd39 !important;
+            color: #0d0d0d !important;
+        }
+
+        .swal2-confirm:hover {
+            background-color: #8bc42d !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="container" style="max-width: 500px;">
+            <div class="card login-card-blur">
+                <div class="d-flex align-items-center justify-content-center logo-header mb-3">
+                    <h2>NeonEncryption</h2>
+                </div>
+
+                <div class="mb-3 text-center">
+                    <h5 class="text-light">Iniciar Sesión</h5>
+                    <p class="text-secondary mt-2">Accede con tu cuenta para continuar:</p>
+                </div>
+
+                <form asp-action="Login" asp-controller="Auth" method="POST" id="loginForm">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Usuario:</label>
+                        <input type="text" id="username" name="Username" required class="form-control"
+                            placeholder="Ingrese su usuario" autocomplete="username" autofocus>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña:</label>
+                        <input type="password" id="password" name="Password" required class="form-control"
+                            placeholder="••••••••" autocomplete="current-password">
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn btn-primary w-100 py-2a mt-2"
+                            style="background-color: #a2dd39; border-color: #a2dd39; color: #0d0d0d;">
+                            Iniciar Sesión
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Mostrar alertas de TempData
+            @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <text>
+                        Swal.fire({
+                            icon: 'error',
+                        title: 'Error',
+                        html: '@Html.Raw(errorMessage.Replace("'", "\\'").Replace("\n", "<br>"))',
+                        confirmButtonText: 'Aceptar',
+                        confirmButtonColor: '#a2dd39',
+                        background: 'rgba(30, 30, 30, 0.95)',
+                        color: '#e0e0e0',
+                        backdrop: 'rgba(0, 0, 0, 0.8)',
+                        width: '20%',
+                    });
+                    </text>
+            }
+
+                @if (!string.IsNullOrEmpty(successMessage))
+                {
+                    <text>
+                        Swal.fire({
+                            icon: 'success',
+                        title: 'Éxito',
+                        html: '@Html.Raw(successMessage.Replace("'", "\\'").Replace("\n", "<br>"))',
+                        confirmButtonText: 'Aceptar',
+                        confirmButtonColor: '#a2dd39',
+                        background: 'rgba(30, 30, 30, 0.95)',
+                        color: '#e0e0e0',
+                        backdrop: 'rgba(0, 0, 0, 0.8)',
+                    });
+                    </text>
+            }
+
+                // Manejo del formulario
+                $('#loginForm').on('submit', function (e) {
+                    var form = $(this);
+                    var submitBtn = form.find('button[type="submit"]');
+                    var originalText = submitBtn.html();
+
+                    submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span> Procesando...');
+                });
+        });
+    </script>
+</body>
+
+</html>

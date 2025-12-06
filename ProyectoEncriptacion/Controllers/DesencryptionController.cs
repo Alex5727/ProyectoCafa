@@ -7,10 +7,6 @@ using ProyectoEncriptacion.Data.Interfaces;
 using ProyectoEncriptacion.Models;
 
 
-
-namespace ProyectoEncriptacion.Controllers
-{
-
     namespace ProyectoEncriptacion.Controllers
     {
         [Route("desencryption")]
@@ -62,4 +58,3 @@ namespace ProyectoEncriptacion.Controllers
             }
         }
     }
-}
