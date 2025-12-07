@@ -23,10 +23,11 @@
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "applicationUrl": "https://localhost:7238;http://localhost:5195",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "CONNECTION_STRING": "Server=ep-damp-snow-ahyagv0h-pooler.c-3.us-east-1.aws.neon.tech;Port=5432;Database=neondb;User Id=cafa;Password=Qz7!kP9@wR#8Lf2S;"
-      }
+        "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "production",
+            "CONNECTION_STRING": "Server=ep-rough-tooth-a45jscyk-pooler.us-east-1.aws.neon.tech;Port=5432;Database=neondb;User Id=neondb_owner;Password=npg_GH1Jk2pCqEUm;SSL Mode=VerifyFull;Channel Binding=Require;"
+
+        }
     },
     "IIS Express": {
       "commandName": "IISExpress",

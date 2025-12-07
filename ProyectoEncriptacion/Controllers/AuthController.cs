@@ -32,6 +32,7 @@ namespace ProyectoEncriptacion.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken] 
         public async Task<IActionResult> Login(LoginDTO loginRequestData)
         {
             try
@@ -44,7 +45,7 @@ namespace ProyectoEncriptacion.Controllers
                     return View("Login");
                 }
 
-                UsuarioModel user = await _authService.Login(loginRequestData);
+                var user = await _authService.Login(loginRequestData);
 
                 // Crear sesión con claims
                 var claims = new List<Claim>

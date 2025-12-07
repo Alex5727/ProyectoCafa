@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DTOs;
-using ProyectoEncriptacion.Models;
+using Data.DataModel;
 
 namespace Data.Interfaces
 {
     public interface IAuthService
     {
-        public Task<UsuarioModel?> Login(LoginDTO loginDto);
+        public Task<UserModel?> Login(LoginDTO loginDto);
     }
 }

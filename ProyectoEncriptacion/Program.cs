@@ -5,24 +5,31 @@ using ProyectoEncriptacion.Data.Interfaces;
 using ProyectoEncriptacion.Data.Services;
 using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Authentication.Cookies;
+
 var builder = WebApplication.CreateBuilder(args);
 
+// Servicios personalizados
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUsersService, UsersService>();
 
+// AES Service
 builder.Services.AddSingleton<IAesService>(_ =>
     new AesService("12345678901234567890123456789012")
 );
 
-
 builder.Services.AddMemoryCache();
 
-
+// MVC
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IUsersService, UsersService>();
 
-var connectionString = builder.Configuration.GetConnectionString("PostgresConnection");
-var postgresConfig = new PostgresSQLConnection(connectionString);
-builder.Services.AddSingleton(postgresConfig);
+
+// ÚNICA configuración válida de PostgreSQL
+string? connString = builder.Configuration.GetConnectionString("PostgresConnection");
+
+Console.WriteLine("CADENA DE CONEXIÓN CARGADA DESDE appsettings.json:");
+Console.WriteLine(connString);
+
+builder.Services.AddSingleton(new PostgresSQLConnection(connString));
 
 // Rate limiting
 builder.Services.AddRateLimiter(options =>
@@ -37,13 +44,7 @@ builder.Services.AddRateLimiter(options =>
             }));
 });
 
-
-var PostgreSQLConnectionConfiguration = new PostgresSQLConnection(
-    Environment.GetEnvironmentVariable("CONNECTION_STRING")
-);
-builder.Services.AddSingleton(PostgreSQLConnectionConfiguration);
-
-// Autenticación
+// Autenticación con Cookies
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -55,23 +56,21 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddAuthorization();
 
-var app = builder.Build(); 
+var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Middleware de error
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 app.UseRouting();
 
-
 app.UseMiddleware<RateLimitMiddleware>();
-
 
 app.UseAuthentication();
 app.UseAuthorization();

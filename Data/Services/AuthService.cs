@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Npgsql;
 using Dapper;
 using Data.Exceptions;
-using ProyectoEncriptacion.Models;
+using Data.DataModel;
 using BC = BCrypt.Net.BCrypt;
 
 namespace Data.Services
@@ -25,15 +25,13 @@ namespace Data.Services
 
         #region LOGIN
 
-        public async Task<UsuarioModel?> Login(LoginDTO loginDto)
+        public async Task<UserModel?> Login(LoginDTO loginDto)
         {
             using var database = DbConnection();
 
             try
             {
-                var result = await _user.FindUserByUsername(loginDto.Username);
-
-                var user = result.FirstOrDefault();
+                var user = await FindUserByName(loginDto.Username);
 
                 if (user == null)
                     throw new HttpResponseException(
@@ -41,7 +39,7 @@ namespace Data.Services
                         "Usuario no encontrado"
                     );
 
-                if (!BC.EnhancedVerify(loginDto.Password, user.passwd))
+                if (!BC.EnhancedVerify(loginDto.Password, user.passwd))  //a
                     throw new HttpResponseException(
                         StatusCodes.Status401Unauthorized, 
                         "Correo o contraseña incorrecta."
@@ -68,9 +66,26 @@ namespace Data.Services
             }
         }
 
+        #region FindUserByName
+
+        public async Task<UserModel> FindUserByName(string name)
+        {
+            string query = "SELECT * FROM public.fun_find_user(@p_username);";
+
+            var param = new
+            {
+                p_username = name
+            };
+
+            var result = (await AuthQueryAsync<UserModel>(query, param)).FirstOrDefault();
+
+            return result!;
+
+        }
+        #endregion
         #endregion
 
-        public async Task<IEnumerable<T>> UsuarioQueryAsync<T>(string SqlQuery, object? parametros = null)
+        public async Task<IEnumerable<T>> AuthQueryAsync<T>(string SqlQuery, object? parametros = null)
         {
             IEnumerable<T> items = [];
 

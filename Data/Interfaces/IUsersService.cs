@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProyectoEncriptacion.Models;
+using Data.DataModel;
+
 
 namespace Data.Interfaces
 {
     public interface IUsersService
     {
-        public Task<IEnumerable<UsuarioModel>> FindUserByUsername(string username);
+        public Task<IEnumerable<UserModel>> FindUserByUsername(string username);
     }
 }

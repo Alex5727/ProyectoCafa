@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Dapper;
 using Data.Interfaces;
 using Npgsql;
-using ProyectoEncriptacion.Models;
+using Data.DataModel;
 
 namespace Data.Services
 {
@@ -20,23 +20,34 @@ namespace Data.Services
         }
         protected NpgsqlConnection DbConnection() => new NpgsqlConnection(_connectionString._ConnectionString);
 
-        #region FIND_USER
-        public async Task<IEnumerable<UsuarioModel>> FindUserByUsername(string username)
+
+       public async Task<IEnumerable<UserModel>> FindUserByUsername(string username)
         {
             using var dbConnection = DbConnection();
 
-            var parameters = new
-            {
-                p_username = username
-            };
+            var sql = "SELECT * FROM public.fun_find_user(@p_username);";
 
-            var sqlQuery = "SELECT * FROM encriptacion.fun_find_user(@p_username);";
+            Console.WriteLine("SQL ejecutado: " + sql);
 
-            await dbConnection.OpenAsync();
-            var result = await dbConnection.QueryAsync<UsuarioModel>(sql: sqlQuery, parameters);
+                var parameters = new { p_username = username };
+
+                    await dbConnection.OpenAsync();
+
+            var result = await dbConnection.QueryAsync<UserModel>(
+                sql,
+                parameters
+            );
+
+            if (dbConnection.State != System.Data.ConnectionState.Closed)
+                await dbConnection.CloseAsync();
+
             return result;
-
         }
-        #endregion
+
+
+
     }
 }
+
+
+
