@@ -3,16 +3,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ProyectoEncriptacion.Controllers
 {
-    [Route("usersmanagement")]
-    [Route("users")]
-    [Authorize]
-    public class UsersManagementController : Controller
+    [Route("report")]
+    [Authorize]  // quitar si quieres que cualquiera pueda verla
+    public class ReportController : Controller
     {
+        // GET: /report o /report/index
         [HttpGet("")]
         [HttpGet("index")]
         public IActionResult Index()
         {
-            return View("UsersManagement");
+            return View("Report");
         }
     }
 }

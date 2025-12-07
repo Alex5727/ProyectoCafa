@@ -8,43 +8,28 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Servicios personalizados
+
+builder.Services.AddSingleton<IAesService>(_ =>
+{
+    // MISMA clave que usabas antes y funcionaba
+    return new AesService("12345678901234567890123456789012");
+});
+
+
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
 
-// AES Service
-builder.Services.AddSingleton<IAesService>(_ =>
-    new AesService("12345678901234567890123456789012")
-);
-
 builder.Services.AddMemoryCache();
 
-// MVC
+
 builder.Services.AddControllersWithViews();
 
 
-// ÚNICA configuración válida de PostgreSQL
 string? connString = builder.Configuration.GetConnectionString("PostgresConnection");
 
-Console.WriteLine("CADENA DE CONEXIÓN CARGADA DESDE appsettings.json:");
-Console.WriteLine(connString);
+var postgresConfig = new PostgresSQLConnection(connString);
+builder.Services.AddSingleton(postgresConfig);
 
-builder.Services.AddSingleton(new PostgresSQLConnection(connString));
-
-// Rate limiting
-builder.Services.AddRateLimiter(options =>
-{
-    options.AddPolicy("loginPolicy", httpContext =>
-        RateLimitPartition.GetFixedWindowLimiter(
-            partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "global",
-            factory: _ => new FixedWindowRateLimiterOptions
-            {
-                PermitLimit = 5,
-                Window = TimeSpan.FromMinutes(1)
-            }));
-});
-
-// Autenticación con Cookies
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -56,26 +41,31 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddAuthorization();
 
+
 var app = builder.Build();
 
-// Middleware de error
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
+
+
+app.UseDeveloperExceptionPage(); //aaaaa
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
 
 app.UseMiddleware<RateLimitMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Rutas
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
