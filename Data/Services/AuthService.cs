@@ -130,5 +130,56 @@ namespace Data.Services
             
             return items;
         }
+
+
+    //     #region INTENTOS
+
+    //      public async Task<int> ObtenerFallosRecientes(string usuario)
+    // {
+    //     string sql = @"
+    //         SELECT COUNT(*)
+    //         FROM intentos_login
+    //         WHERE usuario = @usuario
+    //           AND ok = false
+    //           AND fecha > now() - INTERVAL '5 minutes';
+    //     ";
+
+    //     await _connection.OpenAsync();
+    //     var cmd = new NpgsqlCommand(sql, _connection);
+    //     cmd.Parameters.AddWithValue("@usuario", usuario);
+    //     int result = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+    //     await _connection.CloseAsync();
+
+    //     return result;
+    // }
+
+    // public async Task RegistrarIntento(string ip, string usuario, bool ok, string agente)
+    // {
+    //     string sql = @"
+    //         INSERT INTO intentos_login(ip, usuario, ok, agente)
+    //         VALUES(@ip, @usuario, @ok, @agente);
+    //     ";
+
+    //     await _connection.OpenAsync();
+    //     var cmd = new NpgsqlCommand(sql, _connection);
+    //     cmd.Parameters.AddWithValue("@ip", ip);
+    //     cmd.Parameters.AddWithValue("@usuario", usuario ?? (object)DBNull.Value);
+    //     cmd.Parameters.AddWithValue("@ok", ok);
+    //     cmd.Parameters.AddWithValue("@agente", agente);
+    //     await cmd.ExecuteNonQueryAsync();
+    //     await _connection.CloseAsync();
+    // }
+
+    // public async Task ResetearIntentos(string usuario)
+    // {
+    //     string sql = @"DELETE FROM intentos_login WHERE usuario = @usuario;";
+
+    //     await _connection.OpenAsync();
+    //     var cmd = new NpgsqlCommand(sql, _connection);
+    //     cmd.Parameters.AddWithValue("@usuario", usuario);
+    //     await cmd.ExecuteNonQueryAsync();
+    //     await _connection.CloseAsync();
+    // }
+        // #endregion
     }
 }
