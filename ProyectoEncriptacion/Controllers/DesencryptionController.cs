@@ -10,7 +10,7 @@ using ProyectoEncriptacion.Models;
     namespace ProyectoEncriptacion.Controllers
     {
         [Route("desencryption")]
-        //[Authorize]
+        [Authorize]
         public class DesencryptionController : Controller
         {
             private readonly IAesService _aes;

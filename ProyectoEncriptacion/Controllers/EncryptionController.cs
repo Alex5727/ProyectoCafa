@@ -6,35 +6,29 @@ using ProyectoEncriptacion.Models;
 
 namespace ProyectoEncriptacion.Controllers
 {
+    [Authorize]
     [Route("encryption")]
-    [Route("ecrypt")]
-    //[Authorize]
+    [Route("encrypt")]
     public class EncryptionController : Controller
     {
-       
-
         private readonly IAesService _aesService;
-        
-        
-        public IActionResult Encryption()
-        {
-            var model = new EncryptionViewModel();
-            // inicializa propiedades necesarias, por ejemplo:
-           
-            return View(model);
-        }
+
+        // PRIMERO el constructor SIEMPRE
         public EncryptionController(IAesService aesService)
         {
             _aesService = aesService;
         }
 
-        [HttpGet]
+        // PANTALLA PRINCIPAL
+        [HttpGet("")]
+        [HttpGet("index")]
         public IActionResult Index()
         {
             return View("Encryption", new EncryptionViewModel());
         }
 
-        [HttpPost]
+        // POST
+        [HttpPost("index")]
         public IActionResult Index(EncryptionViewModel model)
         {
             if (!string.IsNullOrEmpty(model.InputText))
@@ -45,4 +39,5 @@ namespace ProyectoEncriptacion.Controllers
             return View("Encryption", model);
         }
     }
+
 }

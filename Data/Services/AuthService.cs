@@ -39,7 +39,7 @@ namespace Data.Services
                         "Usuario no encontrado"
                     );
 
-                if (!BC.EnhancedVerify(loginDto.Password, user.passwd))  //a
+                if (!BC.Verify(loginDto.Password, user.passwd))  //a
                     throw new HttpResponseException(
                         StatusCodes.Status401Unauthorized, 
                         "Correo o contraseña incorrecta."
