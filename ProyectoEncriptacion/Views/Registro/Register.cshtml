@@ -1,28 +1,40 @@
 ﻿@model RegisterViewModel
 
+@{
+    ViewData["Title"] = "Registro";
+    var errorMessage = TempData["Error"] as string;
+    var successMessage = TempData["Success"] as string;
+}
+
 <h2>Registro de Usuario</h2>
 
-@if (ViewBag.Message != null)
+@if (!string.IsNullOrEmpty(errorMessage))
 {
-    <div class="alert alert-success">@ViewBag.Message</div>
+    <div class="alert alert-danger">@errorMessage</div>
+}
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success">@successMessage</div>
 }
 
 <form asp-controller="Registro" asp-action="Register" method="post">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div class="form-group">
-        <label>Nombre de Usuario</label>
+        <label asp-for="Username"></label>
         <input asp-for="Username" class="form-control" />
         <span asp-validation-for="Username" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label>Contraseña</label>
+        <label asp-for="Password"></label>
         <input asp-for="Password" class="form-control" type="password" />
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label>Confirmar Contraseña</label>
+        <label asp-for="ConfirmPassword"></label>
         <input asp-for="ConfirmPassword" class="form-control" type="password" />
         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
     </div>
@@ -30,7 +42,6 @@
     <br />
 
     <button type="submit" class="btn btn-primary">Registrarse</button>
-
 </form>
 
 @section Scripts {

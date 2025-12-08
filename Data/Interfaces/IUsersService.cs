@@ -11,5 +11,6 @@ namespace Data.Interfaces
     public interface IUsersService
     {
         public Task<IEnumerable<UserModel>> FindUserByUsername(string username);
+        Task CreateUserAsync(string username, string password);
     }
 }
