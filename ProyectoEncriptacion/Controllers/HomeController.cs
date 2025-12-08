@@ -1,10 +1,12 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using ProyectoEncriptacion.Models;
 
 namespace ProyectoEncriptacion.Controllers;
 
+[EnableRateLimiting("GeneralPolicy")]
 [Authorize]
 
 public class HomeController : Controller

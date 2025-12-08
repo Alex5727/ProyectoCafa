@@ -21,7 +21,7 @@ namespace Data.Services
         protected NpgsqlConnection DbConnection() => new NpgsqlConnection(_connectionString._ConnectionString);
 
 
-       public async Task<IEnumerable<UserModel>> FindUserByUsername(string username)
+        public async Task<IEnumerable<UserModel>> FindUserByUsername(string username)
         {
             using var dbConnection = DbConnection();
 
@@ -29,9 +29,9 @@ namespace Data.Services
 
             Console.WriteLine("SQL ejecutado: " + sql);
 
-                var parameters = new { p_username = username };
+            var parameters = new { p_username = username };
 
-                    await dbConnection.OpenAsync();
+            await dbConnection.OpenAsync();
 
             var result = await dbConnection.QueryAsync<UserModel>(
                 sql,

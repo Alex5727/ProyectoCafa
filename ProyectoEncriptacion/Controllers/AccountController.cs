@@ -1,12 +1,13 @@
 ﻿using Data.DataModel;
 using Data.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using ProyectoEncriptacion.Models;
 
 namespace ProyectoEncriptacion.Controllers
 {
-    
 
+    [EnableRateLimiting("LoginPolicy")]
     public class RegistroController : Controller
     {
         [HttpGet]

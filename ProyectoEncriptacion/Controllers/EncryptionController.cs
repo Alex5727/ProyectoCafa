@@ -1,13 +1,13 @@
 ﻿
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using ProyectoEncriptacion.Data.Interfaces;
 using ProyectoEncriptacion.Models;
 
-
-
 namespace ProyectoEncriptacion.Controllers
 {
+    [EnableRateLimiting("GeneralPolicy")]
     [Route("encryption")]
     [Route("ecrypt")]
     [Authorize]

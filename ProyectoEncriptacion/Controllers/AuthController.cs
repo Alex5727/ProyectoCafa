@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using ProyectoEncriptacion.Models;
 using Data.Exceptions;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.RateLimiting;
+
 
 namespace ProyectoEncriptacion.Controllers
 {
+    [EnableRateLimiting("LoginPolicy")]
     [Route("Auth")]
     public class AuthController : Controller
     {
@@ -33,7 +36,7 @@ namespace ProyectoEncriptacion.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken] 
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginDTO loginRequestData)
         {
             try
