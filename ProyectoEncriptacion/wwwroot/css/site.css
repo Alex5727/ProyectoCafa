@@ -2,7 +2,7 @@
 
 /* 🟢 Verde Neón Principal (A2DD39) */
 .text-green {
-    color: #a2dd39 !important;
+    color: #e0e0e0 !important;
 }
 
 .border-green {
@@ -15,7 +15,7 @@
 
 /* ⚪ Verde Suave Secundario/Claro (D7E7C6) */
 .text-sub-green {
-    color: #d7e7c6 !important;
+    color: #e0e0e0 !important;
 }
 
 /* 🔵 Azul Eléctrico/Ciber (Nuevo para Acentos de Datos/Conexión) */
@@ -41,7 +41,7 @@
 
 html {
     font-size: 14px;
-    background-color: #0d0d0d !important; /* Fondo Principal */
+    background-color: #444 !important; /* Fondo Principal */
     position: relative; /* Esencial para que el footer pueda posicionarse de forma absoluta */
     min-height: 100%;
 }
@@ -62,18 +62,18 @@ html {
 
 /* Fondos Oscuros */
 .bg-dark-custom {
-    background-color: #121212 !important; /* Fondo Oscuro Navbar/Secciones */
+    background-color: #444 !important; /* Fondo Oscuro Navbar/Secciones */
 }
 
 .bg-card {
-    background-color: #1e1e1e !important; /* Fondo de Tarjetas (Cards) */
+    background-color: #444 !important; /* Fondo de Tarjetas (Cards) */
 }
 
 
 /* --- Estilos Generales --- */
 
 body {
-    background-color: #0d0d0d !important;
+    background-color: #444 !important;
     color: #e0e0e0 !important; /* Color de texto claro general */
     margin-bottom: 60px;
     min-height: 100vh;
@@ -82,38 +82,38 @@ body {
 
 /* Navbar Oscura */
 .navbar {
-    background-color: #121212 !important;
+    background-color: #444 !important;
     border-bottom: 1px solid #333 !important;
 }
 
     .navbar .navbar-brand,
     .navbar .nav-link {
-        color: #ffffff !important;
+        color: #e0e0e0 !important;
     }
 
         .navbar .nav-link:hover {
-            color: #a2dd39 !important; /* Hover con Verde Neón */
+            color: #e0e0e0 !important; /* Hover con Verde Neón */
         }
 
 /* Botones (Usa btn-success o btn-primary) */
 .btn-success,
 .btn-primary {
-    background-color: #a2dd39 !important;
-    border-color: #a2dd39 !important;
+    background-color: cornflowerblue !important;
+    border-color: cornflowerblue !important;
     color: #000 !important; /* Texto negro para contraste máximo */
     font-weight: 600;
 }
 
     .btn-success:hover,
     .btn-primary:hover {
-        background-color: #8cc32e !important;
-        border-color: #8cc32e !important;
+        background-color: cornflowerblue !important;
+        border-color: cornflowerblue !important;
         transform: translateY(-1px);
     }
 
 /* Enlaces (Links) */
 a {
-    color: #a2dd39;
+    color: #e0e0e0;
 }
 
     a:hover {
@@ -134,7 +134,7 @@ a {
 .card-header {
     background-color: #252525 !important;
     border-bottom: 1px solid #333 !important;
-    color: #a2dd39 !important; /* Títulos de tarjeta en Verde Neón */
+    color: #e0e0e0 !important; /* Títulos de tarjeta en Verde Neón */
 }
 
 /* Tablas */
