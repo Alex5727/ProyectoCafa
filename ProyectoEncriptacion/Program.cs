@@ -15,6 +15,8 @@ builder.Services.AddSingleton<IAesService>(_ =>
     return new AesService("12345678901234567890123456789012");
 });
 
+builder.Services.AddScoped<UserService>(sp =>
+    new UserService(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUsersService, UsersService>();

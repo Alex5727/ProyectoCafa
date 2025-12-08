@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Data.DataModel;
+using Data.Services;
+using Microsoft.AspNetCore.Mvc;
 using ProyectoEncriptacion.Models;
 
 namespace ProyectoEncriptacion.Controllers
 {
+    
+
     public class RegistroController : Controller
     {
         [HttpGet]
