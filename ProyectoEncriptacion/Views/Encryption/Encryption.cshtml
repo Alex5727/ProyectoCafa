@@ -1,17 +1,25 @@
 <h2>Cifrado AES-256 GCM</h2>
 
 <form asp-action="Index" method="post">
-    <div>
-        <label for="InputText">Texto a cifrar:</label><br />
-        <textarea id="InputText" name="InputText" rows="4" cols="50">@Model.InputText</textarea>
+    <div class="form-group mb-3">
+        <label for="InputText" class="form-label">Ingresa un texto a :</label>
+        <textarea id="InputText"
+                  name="InputText"
+                  rows="4"
+                  class="form-control"
+                  placeholder="Pega aquí el texto a cifrar">@Model.InputText</textarea>
     </div>
-    <div>
-        <button type="submit">Cifrar</button>
-    </div>
+    <button type="submit" class="btn btn-primary">
+        Encriptar
+    </button>
 </form>
 
 @if (!string.IsNullOrEmpty(Model.OutputText))
 {
-    <h3>Texto cifrado:</h3>
-    <textarea rows="4" cols="50" readonly>@Model.OutputText</textarea>
+    <div class="mt-4">
+        <label class="form-label">Texto encriptado:</label>
+        <textarea class="form-control"
+                  rows="4"
+                  readonly>@Model.OutputText</textarea>
+    </div>
 }
